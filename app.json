@@ -3,6 +3,7 @@
     "name": "Gofor_Prototype",
     "slug": "Gofor_Prototype",
     "version": "1.0.0",
+    "jsEngine": "hermes",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
