@@ -1,28 +1,32 @@
 import { View, StyleSheet, Button } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useForm } from 'react-hook-form';
 import { UserModel } from '../../clients/GoForClient';
 import { Controller } from 'react-hook-form';
 import { TextInput } from 'react-native-paper';
 import { AuthService } from '../../services/AuthService';
+import { AuthContext } from '../../context/AuthContext';
 
 export default function Login() {
 
+  const authService = new AuthService();
+
+  const { login } = useContext(AuthContext)
+
   const { control, handleSubmit } = useForm<UserModel>();
 
-  useEffect(() => {
-    const test = new AuthService();
-    // test.Test()
-    // .then(
-    //   data => {
-    //     console.log(data);
-    //   }
-    // )
-  }, [])
-  
-
-  function Login(data: UserModel) {
-    console.log(data);
+  function loginSubmit(data: UserModel) {
+    authService.login(data)
+    .then(
+      data => {
+        login(data);
+      }
+    )
+    .catch(
+      err => {
+        alert(err)
+      }
+    )
   }
 
   return (
@@ -47,6 +51,7 @@ export default function Login() {
             style={styles.input}
             onChangeText={value => onChange(value)}
             value={value}
+            secureTextEntry
             placeholder='Mot de passe'
           />
         )}
@@ -56,7 +61,7 @@ export default function Login() {
       <View style={styles.button}>
         <Button
           title='Connexion'
-          onPress={handleSubmit(Login)}
+          onPress={handleSubmit(loginSubmit)}
         />
       </View>
     </View>

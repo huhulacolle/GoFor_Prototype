@@ -1,21 +1,19 @@
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
-import { AuthClient, TokenModel } from './../clients/GoForClient';
+import { AuthClient, TokenModel, UserModel } from './../clients/GoForClient';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { URL } from '@env';
 
 export class AuthService {
 
-  authClient!: AuthClient;
-  refreshClient = new AuthClient(URL);
-
-  constructor() { 
-    this.newAxiosInstance();    
+  async login(data: UserModel) {
+    const authClient = await this.newAxiosInstance();
+    return authClient.login(data);
   }
 
-  async Test(): Promise<string> {
-    console.log("test");
-    return this.authClient.test();
+  async Test() {
+    const authClient = await this.newAxiosInstance();
+    return authClient.test();
   }
 
   async newAxiosInstance() {
@@ -23,16 +21,17 @@ export class AuthService {
     const token = await SecureStore.getItemAsync("token");
     axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     createAuthRefreshInterceptor(axiosInstance, this.refreshToken)
-    this.authClient = new AuthClient(URL, axiosInstance);
+    return new AuthClient(URL, axiosInstance);
   }
 
   async refreshToken(failedRequest: any): Promise<void> {
+    const refreshClient = new AuthClient(URL);
     const token = await SecureStore.getItemAsync("token");
     const refreshToken = await SecureStore.getItemAsync("refreshToken");
     const tokenModel = new TokenModel();
     tokenModel.token = token as string;
     tokenModel.refreshToken = refreshToken as string;
-    this.refreshClient.refresh(tokenModel)
+    refreshClient.refresh(tokenModel)
     .then(
       async (newToken) => {
         await SecureStore.setItemAsync("token", newToken.token);
