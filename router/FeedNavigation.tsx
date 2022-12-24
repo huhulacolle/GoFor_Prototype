@@ -33,7 +33,8 @@ export default function FeedStack() {
           component={TutosFromTable}
           options={{
             headerStyle: {backgroundColor: "#F06C1A",},
-            headerTintColor: '#fff',  
+            headerTintColor: '#fff',
+            animation: 'slide_from_right'
           }}
         />
         <Stack.Screen
@@ -56,7 +57,7 @@ function FeedTab() {
         component={FeedUser}
         options={{
           headerStyle: {backgroundColor: "#F06C1A",},
-          headerTintColor: '#fff',  
+          headerTintColor: '#fff',
         }}
       />
       <Tab.Screen
@@ -64,7 +65,7 @@ function FeedTab() {
         component={Feed}
         options={{
           headerStyle: {backgroundColor: "#F06C1A",},
-          headerTintColor: '#fff',  
+          headerTintColor: '#fff',
         }}
       />
     </Tab.Navigator>

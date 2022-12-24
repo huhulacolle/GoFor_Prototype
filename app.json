@@ -2,7 +2,7 @@
   "expo": {
     "name": "Gofor_Prototype",
     "slug": "Gofor_Prototype",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "jsEngine": "hermes",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
