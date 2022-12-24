@@ -191,9 +191,23 @@ export class AuthClient {
         }
         return Promise.resolve<TokenModel>(null as any);
     }
+}
+
+export class TestClient {
+    private instance: AxiosInstance;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+
+        this.instance = instance ? instance : axios.create();
+
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "https://localhost:7281";
+
+    }
 
     test(  cancelToken?: CancelToken | undefined): Promise<string> {
-        let url_ = this.baseUrl + "/api/Auth/test";
+        let url_ = this.baseUrl + "/api/Test";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_: AxiosRequestConfig = {
@@ -361,7 +375,7 @@ export class UserClient {
         return Promise.resolve<TableModel>(null as any);
     }
 
-    getTuto(idTable: number , cancelToken?: CancelToken | undefined): Promise<TutoModel> {
+    getTuto(idTable: number , cancelToken?: CancelToken | undefined): Promise<TutoModel[]> {
         let url_ = this.baseUrl + "/api/tuto/{idTable}";
         if (idTable === undefined || idTable === null)
             throw new Error("The parameter 'idTable' must be defined.");
@@ -388,7 +402,7 @@ export class UserClient {
         });
     }
 
-    protected processGetTuto(response: AxiosResponse): Promise<TutoModel> {
+    protected processGetTuto(response: AxiosResponse): Promise<TutoModel[]> {
         const status = response.status;
         let _headers: any = {};
         if (response.headers && typeof response.headers === "object") {
@@ -402,14 +416,21 @@ export class UserClient {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = TutoModel.fromJS(resultData200);
-            return Promise.resolve<TutoModel>(result200);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(TutoModel.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return Promise.resolve<TutoModel[]>(result200);
 
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<TutoModel>(null as any);
+        return Promise.resolve<TutoModel[]>(null as any);
     }
 
     setTable(table: TableModel , cancelToken?: CancelToken | undefined): Promise<void> {

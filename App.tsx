@@ -7,6 +7,7 @@ import FeedStack from './router/FeedNavigation';
 import * as SecureStore from 'expo-secure-store';
 import { TokenModel } from './clients/GoForClient';
 import { AuthContext } from './context/AuthContext';
+import { Provider as PaperProvider } from 'react-native-paper';
 
 export default function App() {
 
@@ -45,6 +46,7 @@ export default function App() {
       let token: string | null;
       try {
         token = await SecureStore.getItemAsync("token");
+        console.log(token);
       } catch (error) {
         alert(error)
         token = null;
@@ -69,17 +71,19 @@ export default function App() {
   []) 
 
   return (
-    <AuthContext.Provider value={authContext}>
-      <NavigationContainer>
-        {
-          state.token ? (
-            <FeedStack />
-          ) : (
-            <AuthStack />
-          )
-        }
-        <StatusBar style="auto" />
-      </NavigationContainer>
-    </AuthContext.Provider>
+    <PaperProvider>
+      <AuthContext.Provider value={authContext}>
+        <NavigationContainer>
+          {
+            state.token ? (
+              <FeedStack />
+            ) : (
+              <AuthStack />
+            )
+          }
+          <StatusBar style="auto" />
+        </NavigationContainer>
+      </AuthContext.Provider>
+    </PaperProvider>
   );
 }
