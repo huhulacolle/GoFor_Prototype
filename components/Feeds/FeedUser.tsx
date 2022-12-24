@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import UserService from '../../services/UserService'
 import { TableModel } from '../../clients/GoForClient';
 import { Card, FAB, Provider } from 'react-native-paper';
+import { useIsFocused } from '@react-navigation/native';
 
 export default function FeedUser({ navigation }: any) {
 
@@ -10,9 +11,13 @@ export default function FeedUser({ navigation }: any) {
 
   const [Tables, setTables] = useState<TableModel[]>([])
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
-    getTables();
-  }, [])
+    if (isFocused) {
+      getTables();
+    }  
+  }, [useIsFocused])
 
   function getTables(): void {
     userService.getTables()
@@ -27,7 +32,6 @@ export default function FeedUser({ navigation }: any) {
       }
     )
   }
-  
 
   return (
     <Provider>

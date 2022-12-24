@@ -4,16 +4,21 @@ import UserService from '../../services/UserService';
 import { FAB, Provider } from 'react-native-paper';
 import { TutoModel } from '../../clients/GoForClient';
 import YoutubeIframe from 'react-native-youtube-iframe';
+import { useIsFocused } from '@react-navigation/native';
 
 export default function TutosFromTable({ navigation, route }: any) {
 
   const userService = new UserService;
 
-const [Tutos, setTutos] = useState<TutoModel[]>([])
+  const [Tutos, setTutos] = useState<TutoModel[]>([])
+
+  const isFocused = useIsFocused();
 
   useEffect(() => {
-    getTuto();
-  }, [])
+    if (isFocused) {
+      getTuto();
+    }
+  }, [isFocused])
 
   function getTuto(): void {
     userService.getTuto(route.params)
