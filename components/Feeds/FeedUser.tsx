@@ -1,8 +1,8 @@
-import { View, StyleSheet, FlatList } from 'react-native'
+import { StyleSheet, FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import UserService from '../../services/UserService'
 import { TableModel } from '../../clients/GoForClient';
-import { Card, FAB, Provider } from 'react-native-paper';
+import { Card, FAB, Provider, Text } from 'react-native-paper';
 import { useIsFocused } from '@react-navigation/native';
 
 export default function FeedUser({ navigation }: any) {
@@ -42,6 +42,9 @@ export default function FeedUser({ navigation }: any) {
         renderItem={({ item }) => (
           <Card style={styles.card} onPress={() => navigation.navigate("TutosFromTable", item.id)}>
             <Card.Title title={item.name} />
+            <Card.Content>
+              <Text>{item.description}</Text>
+            </Card.Content>
           </Card>
         )}
       />

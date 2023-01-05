@@ -1,9 +1,10 @@
-import { View, StyleSheet, Button } from 'react-native'
+import { View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import { TableModel } from '../../clients/GoForClient';
 import { TextInput } from 'react-native-paper';
 import UserService from '../../services/UserService';
+import Tags from "react-native-tags";
 
 export default function AddTable({ navigation }: any) {
 
@@ -13,34 +14,60 @@ export default function AddTable({ navigation }: any) {
 
   function setTableSubmit(data: TableModel) {
     userService.setTable(data)
-    .then(
-      () => {
-        navigation.goBack();
-      }
-    )
-    .catch(
-      err => {
-        alert(err)
-        console.log(err.status);
-      }
-    )
+      .then(
+        () => {
+          navigation.goBack();
+        }
+      )
+      .catch(
+        err => {
+          alert(err)
+          console.log(err.status);
+        }
+      )
   }
 
   return (
     <View>
       <Controller
         control={control}
-        render={({field: { onChange, value }}) => (
+        render={({ field: { onChange, value } }) => (
           <TextInput
             style={styles.input}
             onChangeText={value => onChange(value)}
             value={value}
-            placeholder='Nom'
+            label={'Nom'}
           />
         )}
         name='name'
-        rules={{required: true}}
+        rules={{ required: true }}
       />
+      <Controller
+        control={control}
+        render={({ field: { onChange, value } }) => (
+          <TextInput
+            style={styles.input}
+            onChangeText={value => onChange(value)}
+            value={value}
+            label={'Description'}
+          />
+        )}
+        name='description'
+        rules={{ required: true }}
+      />
+      <Controller
+        control={control}
+        render={({field: { onChange, value }}) => (
+          <TextInput
+            style={styles.input}
+            onChangeText={value => onChange(value)}
+            value={"WIP"}
+            label={'Tags'}
+            disabled
+          />
+        )}
+        name='tags'
+      />            
       <View style={styles.button}>
         <Button
           title='Nouveau tableau'

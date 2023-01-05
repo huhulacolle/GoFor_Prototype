@@ -38,7 +38,7 @@ export default function Login() {
             style={styles.input}
             onChangeText={value => onChange(value)}
             value={value}
-            placeholder='Email'
+            label={'Email'}
           />
         )}
         name='email'
@@ -52,7 +52,8 @@ export default function Login() {
             onChangeText={value => onChange(value)}
             value={value}
             secureTextEntry
-            placeholder='Mot de passe'
+            label={'Mot de passe'}
+            right={<TextInput.Icon icon="eye" />}
           />
         )}
         name='password'
