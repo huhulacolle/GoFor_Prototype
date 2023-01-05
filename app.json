@@ -27,11 +27,30 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#F06C1A"
       },
+      "intentFilters": [
+        {
+          "action": "SEND",
+          "category": "DEFAULT",
+          "data": [
+            {
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ],
       "package": "com.digital.gofor"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "plugins": [
+      [
+        "./plugin/withReactNativeShareMenu.js",
+        {
+          "devTeam": "GoFor"
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "36c3416a-d7b1-47a8-89a0-c4523114acfe"
