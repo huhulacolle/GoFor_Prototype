@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Button } from 'react-native'
-import React, { useContext, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext';
 import TestService from '../../services/TestService';
 
@@ -8,6 +8,7 @@ export default function Feed() {
   const { disconnect } = useContext(AuthContext)
   const testService = new TestService;
   const [Loading, setLoading] = useState(false)
+
 
   function test() {
     setLoading(true);

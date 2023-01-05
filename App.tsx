@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { useCallback, useEffect, useMemo, useReducer } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { IAction } from './interfaces/IAction';
 import AuthStack from './router/AuthNavigation';
 import FeedStack from './router/FeedNavigation';
@@ -9,6 +9,9 @@ import { TokenModel } from './clients/GoForClient';
 import { AuthContext } from './context/AuthContext';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { Text, View } from 'react-native';
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
+LogBox.ignoreAllLogs();
 
 export default function App() {
 

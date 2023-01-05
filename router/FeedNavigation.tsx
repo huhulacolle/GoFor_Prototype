@@ -11,6 +11,7 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function FeedStack() {
+
   return (
     <Stack.Navigator>
       <Stack.Screen 
