@@ -29,6 +29,7 @@ export default function FeedUser({ navigation }: any) {
     .catch(
       err => {
         alert(err)
+        console.log(err);
       }
     )
   }

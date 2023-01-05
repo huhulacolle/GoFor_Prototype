@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useMemo, useReducer } from 'react';
+import { useCallback, useEffect, useMemo, useReducer } from 'react';
 import { IAction } from './interfaces/IAction';
 import AuthStack from './router/AuthNavigation';
 import FeedStack from './router/FeedNavigation';
@@ -8,6 +8,7 @@ import * as SecureStore from 'expo-secure-store';
 import { TokenModel } from './clients/GoForClient';
 import { AuthContext } from './context/AuthContext';
 import { Provider as PaperProvider } from 'react-native-paper';
+import { Text, View } from 'react-native';
 
 export default function App() {
 
@@ -40,13 +41,14 @@ export default function App() {
       token: null,
     }
   );
+  
 
   useEffect(() => {
     async function bootstrapAsync() {
       let token: string | null;
       try {
         token = await SecureStore.getItemAsync("token");
-        console.log(token);
+        // console.log(token);
       } catch (error) {
         alert(error)
         token = null;
@@ -55,6 +57,8 @@ export default function App() {
     }
     bootstrapAsync();
   }, [])
+  
+  
 
   const authContext = useMemo(() => ({
     async login(data: TokenModel) {
@@ -68,7 +72,11 @@ export default function App() {
         dispatch({ type: 'DISCONNECT', token: null })
       }
     }),
-  []) 
+  [])
+
+  if (state.isLoading) {
+    return <View style={{flex: 1, justifyContent: 'center', alignContent: 'center', backgroundColor: "#F06C1A"}}></View>
+  }
 
   return (
     <PaperProvider>
