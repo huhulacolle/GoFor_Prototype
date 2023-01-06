@@ -44,12 +44,7 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      [
-        "./plugin/withReactNativeShareMenu.js",
-        {
-          "devTeam": "GoFor"
-        }
-      ]
+      "expo-config-plugin-ios-share-extension"
     ],
     "extra": {
       "eas": {
