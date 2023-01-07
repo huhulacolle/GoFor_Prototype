@@ -10,10 +10,36 @@ import { AuthContext } from './context/AuthContext';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { Text, View } from 'react-native';
 import { LogBox } from 'react-native';
+import ShareMenu from 'react-native-share-menu';
 LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
 LogBox.ignoreAllLogs();
 
 export default function App() {
+
+  const [sharedData, setSharedData] = useState<string | null>(null);
+
+  const handleShare = useCallback((item: any) => {
+    if (!item) {
+      return;
+    }
+    else {
+      alert(item?.data);
+    }
+
+    setSharedData(item?.data);
+  }, []);
+
+  useEffect(() => {
+    ShareMenu.getInitialShare(handleShare);
+  }, []);
+
+  useEffect(() => {
+    const listener = ShareMenu.addNewShareListener(handleShare);
+
+    return () => {
+      listener.remove();
+    };
+  }, []);
 
   const [state, dispatch] = useReducer(
     (prevState: any, action: IAction) => {
@@ -92,7 +118,7 @@ export default function App() {
               <AuthStack />
             )
           }
-          <StatusBar style="auto" />
+          <StatusBar style="light" />
         </NavigationContainer>
       </AuthContext.Provider>
     </PaperProvider>
