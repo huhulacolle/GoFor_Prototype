@@ -1,35 +1,136 @@
-import { View, Text } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
-import ShareMenu from 'react-native-share-menu';
+import { View, StyleSheet, Button } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form';
+import { TableModel, TutoModel } from '../../clients/GoForClient';
+import { TextInput } from 'react-native-paper';
+import getVideoId from 'get-video-id';
+import UserService from '../../services/UserService';
+import { IDropdown } from '../../interfaces/IDropdown';
+import DropDownPicker from 'react-native-dropdown-picker';
 
-export default function AddTutosShare() {
+export default function AddTutosShare({ route, navigation }: any) {
 
-  const [sharedData, setSharedData] = useState<string | null>(null);
+  const { control, handleSubmit } = useForm<TutoModel>();
+  const [open, setOpen] = useState(false);
+  const [IdTable, setIdTable] = useState<string>("");
+  const [TableList, setTableList] = useState<IDropdown[]>([]);
 
-  const handleShare = useCallback((item: any) => {
-    console.log(item.data);
-    if (!item) {
-      return;
-    }
+  const userService = new UserService;
 
-    setSharedData(item.data);
-  }, []);
+  function getTables(): void {
+    setTableList([]);
+    userService.getTables()
+    .then(
+      data => {
+        data.forEach(d => {
+          let dropdown: IDropdown = {
+            label: "",
+            value: ""
+          };
+          dropdown.label = d.name;          
+          dropdown.value = d.id.toString();
+          setTableList(TableList => [...TableList, dropdown]);
+        });
+      }
+    )
+    .catch(
+      err => {
+        alert(err)
+      }
+    )
+  }
 
   useEffect(() => {
-    ShareMenu.getInitialShare(handleShare);
-  }, []);
+    getTables();
+  }, [])
+  
+  function setTutoSubmit(data: TutoModel) {
 
-  useEffect(() => {
-    const listener = ShareMenu.addNewShareListener(handleShare);
+    data.idTable = parseInt(IdTable);
 
-    return () => {
-      listener.remove();
-    };
-  }, []);
+    data.url = getVideoId(route.params).id as string;
+    
+    userService.setTuto(data)
+    .then(
+      () => {
+        navigation.goBack();
+      }
+    )
+    .catch(
+      err => {
+        alert(err.Message)
+        console.log(err);
+      }
+    )
+  }
 
   return (
     <View>
-      <Text>AddTutosShare</Text>
+      <Controller
+        control={control}
+        render={({field: { onChange, value }}) => (
+          <TextInput
+            style={styles.input}
+            onChangeText={value => onChange(value)}
+            value={value}
+            label={'Nom'}
+          />
+        )}
+        name='title'
+      />
+      <Controller
+        control={control}
+        render={({field: { onChange, value }}) => (
+          <TextInput
+            style={styles.input}
+            onChangeText={value => onChange(value)}
+            value={value}
+            label={'Description'}
+          />
+        )}
+        name='description'
+        rules={{required: true}}
+      />        
+      <Controller
+        control={control}
+        render={({field: { onChange, value }}) => (
+          <TextInput
+            style={styles.input}
+            onChangeText={value => onChange(value)}
+            value={route.params}
+            label={'Url YouTube'}
+            disabled
+          />
+        )}
+        name='url'
+      />
+      <DropDownPicker
+        open={open}
+        value={IdTable}
+        items={TableList}
+        setOpen={setOpen}
+        setValue={setIdTable}
+        containerStyle={styles.input}
+      />
+      <View style={styles.button}>
+        <Button
+          title='Nouveau tuto'
+          onPress={handleSubmit(setTutoSubmit)}
+        />
+      </View>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  input: {
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10
+  },
+  button: {
+    marginTop: 20,
+    marginRight: 40,
+    marginLeft: 40
+  }
+})

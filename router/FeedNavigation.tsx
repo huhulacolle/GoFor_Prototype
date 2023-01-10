@@ -6,6 +6,7 @@ import Feed from '../components/Feeds/Feed';
 import TutosFromTable from '../components/Feeds/TutosFromTable';
 import AddTable from '../components/Feeds/AddTable';
 import AddTuto from '../components/Feeds/AddTuto';
+import AddTutosShare from '../components/Share/AddTutosShare';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -45,6 +46,14 @@ export default function FeedStack() {
             headerStyle: {backgroundColor: "#F06C1A",},
             headerTintColor: '#fff',  
           }}
+        />
+        <Stack.Screen
+          name='AddTutosShare'
+          component={AddTutosShare}
+          options={{
+            headerStyle: {backgroundColor: "#F06C1A",},
+            headerTintColor: '#fff',  
+          }}          
         />
     </Stack.Navigator>
   )

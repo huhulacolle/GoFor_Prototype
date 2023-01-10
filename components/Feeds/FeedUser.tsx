@@ -1,11 +1,33 @@
 import { StyleSheet, FlatList } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import UserService from '../../services/UserService'
 import { TableModel } from '../../clients/GoForClient';
 import { Card, FAB, Provider, Text } from 'react-native-paper';
 import { useIsFocused } from '@react-navigation/native';
+import ShareMenu from 'react-native-share-menu';
 
 export default function FeedUser({ navigation }: any) {
+
+  // pour share
+  const handleShare = useCallback((item: any) => {
+    if (!item || item?.data == null) {
+      return;
+    }
+
+    navigation.navigate("AddTutosShare", item?.data)
+  }, []);
+
+  useEffect(() => {
+    ShareMenu.getInitialShare(handleShare);
+  }, []);
+
+  useEffect(() => {
+    const listener = ShareMenu.addNewShareListener(handleShare);
+
+    return () => {
+      listener.remove();
+    };
+  }, []);
 
   const userService = new UserService;
 
