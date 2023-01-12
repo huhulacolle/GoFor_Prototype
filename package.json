@@ -34,6 +34,7 @@
     "react-native-tags": "^2.2.1",
     "react-native-web": "~0.18.10",
     "react-native-webview": "11.23.1",
+    "react-native-youtube": "^2.0.2",
     "react-native-youtube-iframe": "^2.2.2",
     "xcode": "^3.0.1"
   },

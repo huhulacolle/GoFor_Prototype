@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import UserService from '../../services/UserService';
 import { Card, FAB, Provider } from 'react-native-paper';
 import { TutoModel } from '../../clients/GoForClient';
-import YoutubeIframe from 'react-native-youtube-iframe';
+import YoutubePlayer from "react-native-youtube-iframe";
 import { useIsFocused } from '@react-navigation/native';
 import WebView from 'react-native-webview';
 
