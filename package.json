@@ -33,7 +33,7 @@
     "react-native-share-menu": "^6.0.0",
     "react-native-tags": "^2.2.1",
     "react-native-web": "~0.18.12",
-    "react-native-webview": "11.26.1",
+    "react-native-webview": "11.26.0",
     "react-native-youtube-iframe": "^2.2.2",
     "xcode": "^3.0.1"
   },
