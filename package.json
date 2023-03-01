@@ -8,6 +8,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@flyerhq/react-native-link-preview": "^1.6.0",
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
@@ -20,6 +21,7 @@
     "expo-splash-screen": "~0.18.1",
     "expo-status-bar": "~1.4.4",
     "expo-system-ui": "~2.2.1",
+    "expo-video-thumbnails": "~7.2.1",
     "get-video-id": "^3.6.5",
     "patch-package": "^6.5.1",
     "react": "18.2.0",
@@ -35,8 +37,7 @@
     "react-native-web": "~0.18.11",
     "react-native-webview": "11.26.0",
     "react-native-youtube-iframe": "^2.2.2",
-    "xcode": "^3.0.1",
-    "expo-video-thumbnails": "~7.2.1"
+    "xcode": "^3.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

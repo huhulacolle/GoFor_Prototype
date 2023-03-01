@@ -7,6 +7,7 @@ import TutosFromTable from '../components/Feeds/TutosFromTable';
 import AddTable from '../components/Feeds/AddTable';
 import AddTuto from '../components/Feeds/AddTuto';
 import AddTutosShare from '../components/Share/AddTutosShare';
+import Test from '../components/Test/Test';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -73,6 +74,14 @@ function FeedTab() {
       <Tab.Screen
         name='Feed'
         component={Feed}
+        options={{
+          headerStyle: {backgroundColor: "#F06C1A",},
+          headerTintColor: '#fff',
+        }}
+      />
+      <Tab.Screen
+        name='Test'
+        component={Test}
         options={{
           headerStyle: {backgroundColor: "#F06C1A",},
           headerTintColor: '#fff',
