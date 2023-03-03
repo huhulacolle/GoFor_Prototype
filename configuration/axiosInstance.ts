@@ -12,7 +12,7 @@ axiosApiInstance.interceptors.request.use(
     config.headers = { 
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
-    }
+    } as any
     return config;
   },
   error => {

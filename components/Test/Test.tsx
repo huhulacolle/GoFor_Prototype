@@ -1,27 +1,45 @@
-import { View, Text } from 'react-native'
-import React, { useState } from 'react'
-import * as VideoThumbnails from 'expo-video-thumbnails';
-import { Button } from 'react-native-paper';
-import { LinkPreview } from '@flyerhq/react-native-link-preview';
+import { View, Text, FlatList } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Card } from 'react-native-paper';
 
 export default function Test() {
 
-  const [image, setImage] = useState("");
+  const [Mock, setMock] = useState<string[]>([])
 
-  async function generateImg(): Promise<void> {
-    const test = await VideoThumbnails.getThumbnailAsync("https://www.youtube.com/watch?v=ocbpHB8DspE")
-    console.log(test);
-  }
+  useEffect(() => {
+    setMock(createMock())
+  }, [])
 
-  function vide() {
-    return <Text></Text>
+
+  function createMock(): string[] {
+    let text: string[] = [];
+    for (let i = 0; i < 10; i++) {
+      text.push("test" + i)
+    }
+    return text;
   }
 
   return (
     <View>
-      <Button mode="contained" onPress={generateImg}>test</Button>
-      <LinkPreview text='https://www.youtube.com/watch?v=AGI9HykaIas' renderDescription={vide} renderText={vide} renderTitle={vide} />
-      <LinkPreview text='https://twitter.com/surgeon18012021/status/1630164102143148033' />
+      <FlatList
+        contentContainerStyle={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          alignContent: "center"
+        }}
+        style={{margin: 100}}
+        numColumns={3}
+        data={Mock}
+        renderItem={({ item }) => (
+          <Card style={{padding: 10}}>
+            <Card.Content>
+              <Text> {item} </Text>
+            </Card.Content>
+          </Card>
+        )}
+      />
+
     </View>
   )
 }
